@@ -447,7 +447,7 @@ There is more on creating custom agenda views here: https://orgmode.org/worg/org
 
 *** Automatic Export
 
-I have one Emacs system that I'd like to be doing this (Archipelago). This should after 2160 seconds, or 36 mins of idle time.
+I have one Emacs system that I'd like to be doing this (Archipelago). This should be after 2160 seconds, or 36 mins of idle time.
 
 #+BEGIN_SRC elisp
 (when (string= (system-name) "archipelago")
@@ -580,7 +580,7 @@ For more on capture templates, see [[ https://orgmode.org/manual/Capture-templat
 
 #+BEGIN_SRC emacs-lisp
 
-(setq org-capture-templates
+  (setq org-capture-templates
         (quote (
                 ;; Moleskine
                 ("m" "Moleskine" entry (file+datetree "~/Dropbox/org/moleskine.org")
@@ -599,8 +599,8 @@ For more on capture templates, see [[ https://orgmode.org/manual/Capture-templat
                  "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
 
                 )
-               )
         )
+  )
 
 
 #+END_SRC

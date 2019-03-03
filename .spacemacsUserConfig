@@ -94,26 +94,26 @@
 (setq org-confirm-babel-evaluate nil)
 
 (setq org-capture-templates
-        (quote (
-                ;; Moleskine
-                ("m" "Moleskine" entry (file+datetree "~/Dropbox/org/moleskine.org")
-                 "* %?\nEntered on %U\n  %i\n  ")
+      (quote (
+              ;; Moleskine
+              ("m" "Moleskine" entry (file+datetree "~/Dropbox/org/moleskine.org")
+               "* %?\nEntered on %U\n  %i\n  ")
 
-                ;; Meeting
-                ("M" "Meeting" entry (file+datetree "~/Dropbox/org/moleskine.org")
-                 "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+              ;; Meeting
+              ("M" "Meeting" entry (file+datetree "~/Dropbox/org/moleskine.org")
+               "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
 
-                ;; Research
-                ("r" "Reading ([Reading Notes] in research.org)" entry (file+headline "~/Dropbox/org/research.org" "Reading Notes")
-                 "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
+              ;; Research
+              ("r" "Reading ([Reading Notes] in research.org)" entry (file+headline "~/Dropbox/org/research.org" "Reading Notes")
+               "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
 
-                ;; Emacs/Command Line
-                ("e" "Emacs/CLI" entry (file "~/Dropbox/org/emacs.org" )
-                 "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
+              ;; Emacs/Command Line
+              ("e" "Emacs/CLI" entry (file "~/Dropbox/org/emacs.org" )
+               "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
 
-                )
-               )
-        )
+              )
+      )
+)
 
 (setq org-refile-use-outline-path 'file)
 (setq org-outline-path-complete-in-steps nil)
