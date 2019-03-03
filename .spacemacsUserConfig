@@ -176,6 +176,94 @@ same directory as the org-buffer and insert a link to this file."
 
 (add-hook 'after-init-hook 'mu4e-alert-enable-mode-line-display)
 
+(setq org-mu4e-link-query-in-headers-mode nil)
+
+(setq
+ mu4e-index-cleanup nil      ;; don't do a full cleanup check
+ mu4e-index-lazy-check t)    ;; don't consider up-to-date dirs
+
+(setq mu4e-view-show-images t)
+
+;; use imagemagick, if available
+  (when (fboundp 'imagemagick-register-types)
+    (imagemagick-register-types))
+
+(setq mu4e-update-interval 300)
+
+(setq mu4e-get-mail-command "offlineimap")
+
+(setq
+   mu4e-maildir       "~/.mail"                      ;; top-level Maildir
+   mu4e-sent-folder   "/officeCccu/Sent Items"       ;; folder for sent messages
+   mu4e-drafts-folder "/officeCccu/Drafts"           ;; unfinished messages
+   mu4e-trash-folder  "/officeCccu/Deleted Items"    ;; trashed messages
+   mu4e-refile-folder "/officeCccu/Archive"          ;; saved messages
+   mu4e-attachment-dir  "~/Dropbox/mailAttachments")
+
+user-mail-address  "ian.hocking@canterbury.ac.uk"
+user-full-name "Dr Ian Hocking"
+
+(setq mu4e-compose-signature-auto-include 't)
+   (setq mu4e-compose-signature (with-temp-buffer
+                                 (insert-file-contents "~/.signature.cccu")
+                                 (buffer-string)))
+
+(setq mu4e-use-fancy-chars nil)
+
+(setq mu4e-headers-fields
+      '( (:date          .  10)
+         (:flags         .   6)
+         (:from          .  22)
+         (:subject       .  nil)))
+
+(with-eval-after-load 'mu4e
+                                        ;  (add-to-list 'mu4e-bookmarks
+                                        ;               (make-mu4e-bookmark
+                                        ;                :name  "Big messages"
+                                        ;                :query "size:5M..500M"
+                                        ;                :key ?b) t)
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name  "From: Admin"
+                :query "from:Psychology@canterbury.ac.uk"
+                :key ?a) t)
+                                        ;
+                                        ;  ;; MIME types, see: https://www.sitepoint.com/mime-types-complete-list/
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name  "Attached: PDF"
+                :query "mime:application/pdf"
+                :key ?P) t)
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name  "Attached: Word"
+                :query "mime:application/msword"
+                :key ?W) t)
+  (add-to-list 'mu4e-bookmarks
+               (make-mu4e-bookmark
+                :name  "Attached: Excel"
+                :query "mime:application/excel"
+                :key ?E) t)
+  )
+
+(require 'smtpmail)
+
+(setq send-mail-function  'smtpmail-send-it
+      message-send-mail-function    'smtpmail-send-it
+      smtpmail-smtp-server  "smtp.office365.com"
+      smtpmail-stream-type  'starttls
+      ; smtpmail-smtp-user  "username"
+      smtpmail-smtp-service 587)
+
+(setq mu4e-completing-read-function 'completing-read)
+
+;; Why would I want to leave my message open after I've sent it?
+(setq message-kill-buffer-on-exit 't)
+;; Don't ask for a 'context' upon opening mu4e
+(setq mu4e-context-policy 'pick-first)
+;; Don't ask to quit... why is this the default?
+(setq mu4e-confirm-quit nil)
+
 (setq org-agenda-custom-commands
       `(
          ;; show everything
