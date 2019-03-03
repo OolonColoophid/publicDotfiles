@@ -70,6 +70,15 @@ Use the filename as title.
 
 
  
+** Mu4e
+
+*** Alerts
+
+I'd like these to be in the modeline.
+
+#+BEGIN_SRC elisp
+(add-hook 'after-init-hook 'mu4e-alert-enable-mode-line-display)
+#+END_SRC
 * Behaviour
 ** Line Spacing and Sentence Boundary
 
