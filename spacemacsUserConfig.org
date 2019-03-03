@@ -3,7 +3,7 @@
 #+EMAIL:     ihocking@gmail.com
 #+LANGUAGE:  en
 
-#+PROPERTY: header-args :tangle ~/Dropbox/shellShared/.spacemacsUserConfig
+#+PROPERTY: header-args :tangle ~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig
 
 * About this file
 
