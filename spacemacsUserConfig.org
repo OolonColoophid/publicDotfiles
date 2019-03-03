@@ -1,1 +1,589 @@
-/Users/ianuser/Dropbox/org/spacemacsUserConfig.org
+#+TITLE:     .spacemacs user-config
+#+AUTHOR:    Ian Hocking
+#+EMAIL:     ihocking@gmail.com
+#+LANGUAGE:  en
+
+#+PROPERTY: header-args :tangle ~/Dropbox/shellShared/.spacemacsUserConfig
+
+* About this file
+
+This is a literate coding file in org format. When tangled with ~org-babel-tangle~, it will take the source blocks below and tangle them into a single elisp file called ~.spacemacsUserConfig~ (currently stored on Dropbox), which will then be loaded when Spacemacs starts as part of the function ~user-config~. 
+
+#+BEGIN_SRC emacs-lisp
+
+;; This file has been tangled from .spacemacsUserConfig.org 
+
+;; It is called from ~/.spacemacs by:
+
+;; (load "~/Dropbox/shellShared/.spacemacsUserConfig")
+
+#+END_SRC
+
+* Notes on Usage
+
+** Tags
+At the moment, we're not setting tags here. That seems to invoke Helm, and I prefer the tag splash screen.  
+- It seems that if at least one local TAG is set in a file, you will get the splash screen.
+
+* Applications
+** Deft
+*** Extension
+
+Deft is an application that can search notes in a way like Notational Velocity. Here, I have it searching (and creating) org files.
+
+#+BEGIN_SRC emacs-lisp
+
+(setq deft-extension "org")
+
+#+END_SRC
+
+*** Default format
+
+Make Deft use org format as the default.
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq deft-text-mode 'org-mode)
+
+#+END_SRC
+
+*** Where to search
+
+Search my ~org~ folder; recursively.
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq deft-directory "~/Dropbox/org")
+  (setq deft-recursive t)
+
+#+END_SRC
+
+*** Note title
+
+Use the filename as title.
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq deft-use-filename-as-title t)
+
+#+END_SRC
+
+
+ 
+* Behaviour
+** Line Spacing and Sentence Boundary
+
+Let's have nicer line spacing (the value below is the number of pixels between lines on graphical displays). We'd also like Emacs to treat sentences as finishing with one space.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default line-spacing 10)
+
+(setf sentence-end-double-space nil)
+#+END_SRC
+
+** Undo
+Increase the resolution of the undo tree.
+
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-fine-undo t)
+#+END_SRC
+
+** Buffers
+*** Autosave 
+I'd prefer to use Emacs as though the buffer is 'live'. Autosaving can also help in avoiding buffers getting out of sync with files.
+
+#+BEGIN_SRC emacs-lisp 
+(setq auto-save-interval 20)
+#+END_SRC
+
+*** Closing all buffers
+The following function will allow me to close all buffers quickly if I need to. This is bound to a key described below.
+
+#+BEGIN_SRC emacs-lisp
+(defun my-close-all-buffers ()
+  (interactive)
+  (mapc 'kill-buffer (buffer-list)))
+#+END_SRC
+
+*** Notice file changes
+
+If a file changes on disk, we want Emacs to update the buffer. A file could change on disk because it is being edited by an instance of Emacs on another computer.
+
+#+begin_src emacs-lisp
+
+(global-auto-revert-mode 1)
+
+#+end_src
+
+** Modifier assignment
+
+The hash is a very important key in Emacs. Without the following code, which allows us to enter it using ~right-Alt 3~, this would be considerably more difficult.
+
+#+BEGIN_SRC emacs-lisp 
+(setq ns-right-alternate-modifier (quote none))
+#+END_SRC
+
+* File management
+** Ranger
+
+I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an 'application' accessed with ~SPC a R~.
+
+#+BEGIN_SRC emacs-lisp
+
+(setq ranger-override-dired-mode 't)
+
+#+END_SRC
+
+* Key bindings
+
+#+CAPTION: My keybindings
+#+NAME:    tab:keybindings
+| Key         | Fucntion                        | Description                       |
+|-------------+---------------------------------+-----------------------------------|
+| bq          | my-close-all-buffers            | Close all buffers                 |
+| CTRL-C c g  | org-mac-grab-link               | Capture link from external source |
+| SHIFT-up    | org-move-subtree-up             | Move current heading upwards      |
+| SHIFT-down  | org-move-subtree-down           | Move current heading down         |
+| SHIFT-left  | org-promote-subtree             | Promote current heading           |
+| SHIFT-right | org-demote-subtree              | Demote current heading            |
+| CTRL-c .    | org-agenda-transient-state/body | Agenda transient state            |
+| SPC-m i i   | my/org-screenshot               | Take screenshot and insert        |
+
+#+BEGIN_SRC emacs-lisp 
+
+(evil-leader/set-key "bq" 'my-close-all-buffers)
+
+(define-key evil-normal-state-map (kbd "S-<up>") 'org-move-subtree-up)
+(define-key evil-normal-state-map (kbd "S-<down>") 'org-move-subtree-down)
+(define-key evil-normal-state-map (kbd "S-<left>") 'org-promote-subtree)
+(define-key evil-normal-state-map (kbd "S-<right>") 'org-demote-subtree)
+
+(define-key global-map "\C-c." 'spacemacs/org-agenda-transient-state/body)
+  
+(define-key global-map "\C-cg" 'org-mac-grab-link)
+
+(evil-leader/set-key "mii" 'my/org-screenshot)
+
+
+;; Make movement keys work like they 'should' on long lines
+(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+
+(setq-default evil-cross-lines t)
+#+END_SRC
+
+* Org
+
+** Agenda
+
+There is more on creating custom agenda views here: https://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html
+
+#+BEGIN_SRC elisp
+  (setq org-agenda-custom-commands
+        `(
+           ;; show everything
+           ("ie"                                         ;; key is e
+            "[e]verything"                               ;; description
+            tags                                         ;; results type; this seems to allow better ics export
+            "*"                                          ;; search term (reg ex; search everything)
+              ((org-icalendar-categories (quote (all-tags local-tags category todo-state)))
+               (org-icalendar-exclude-tags '("anniversary"))
+               (org-icalendar-include-body 180)
+               (org-icalendar-include-todo t)
+               ("~/Dropbox/orgExport/orgAll.ics" )
+           ))
+
+          ("it"                                                              ;; key is t
+           "[t]odo, all types, unscheduled"                                  ;; description
+           tags                                                              ;; search by
+           "-DEADLINE={.+}/!+IDEA|+TODO|+STARTED|+NEXT|+WAITING|+DELEGATED"  ;; criteria
+           nil                                                               ;; org variables
+           ("~/Dropbox/orgExport/allTodos.html"))                            ;; file to export
+
+          ("id"                                                              ;; key is d
+           "[d]one, all types"                                               ;; description
+           agenda                                                            ;; type
+           ""                                                                ;; criteria
+           ((org-agenda-start-with-log-mode t)                               ;; show done in agenda
+            (org-agenda-skip-function
+            '(org-agenda-skip-entry-if 'nottodo 'done)))
+            ("~/Dropbox/orgExport/allDone.html"))                            ;; file to export
+
+          ;; Seee https://emacs.stackexchange.com/questions/8150/show-done-items-in-current-calendar-week
+
+          ;; assessment - show exams; agenda view
+          ("iE"                                         ;; key is E
+           "[E]xams for the next month"                 ;; description
+           agenda                                       ;; results type
+           nil                                          ;; search term
+           ((org-agenda-span 28)                        ;; show next 28 days
+            (org-agenda-tag-filter-preset '("+exams"))) ;; limit to tag 'exams'
+           ("~/Dropbox/orgExport/exams.html")
+           )
+
+          ;; assessment - show submissions; agenda view
+          ("is"                                         ;; key is s
+           "[s]ubsmissions for the next month"          ;; description
+           agenda                                       ;; results type
+           nil                                          ;; search term
+           ((org-agenda-span 28)                        ;; show next 28 days
+            (org-agenda-tag-filter-preset '("+submission"))
+            )
+           ("~/Dropbox/orgExport/submission.html")
+           )
+
+          ;; assessment - show feedback; agenda view
+          ("if"                                         ;; key is f
+           "[f]eedback for the next month"              ;; description
+           agenda                                       ;; results type
+           nil                                          ;; search term
+           ((org-agenda-span 28)                        ;; show next 28 days
+            (org-agenda-tag-filter-preset '("+feedback"))
+            )
+           ("~/Dropbox/orgExport/feedback.html")
+           )
+
+          ;; birthdays and anniversaries - show feedback; agenda view
+          ("ia"                                         ;; key is a
+           "[a]anniveraries for the next 90 days"       ;; description
+           agenda                                       ;; results type
+           nil                                          ;; search term
+           ((org-agenda-show-all-dates nil)
+            (org-agenda-start-day "2019-01-01")
+            (org-agenda-span 365)                        ;; show next year days
+            (org-agenda-tag-filter-preset '("+anniversary"))
+            )
+           ("~/Dropbox/orgExport/anniversaries.ics")
+           )
+          )
+        ) 
+
+
+#+END_SRC
+
+*** Automatic Export
+
+I have one Emacs system that I'd like to be doing this (Archipelago). This should after 2160 seconds, or 36 mins of idle time.
+
+#+BEGIN_SRC elisp
+(when (string= (system-name) "archipelago")
+    (run-with-idle-timer 2160 1 'org-store-agenda-views))
+#+END_SRC
+
+** Files
+
+*** Org directory
+
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/Dropbox/org")
+#+END_SRC
+
+*** Agenda
+
+Let's use the following agenda files, which will be scanned when producing an agenda:
+
+#+BEGIN_SRC emacs-lisp
+
+  (setq org-agenda-files (list
+        "~/Dropbox/org/career.org"
+        "~/Dropbox/org/emacs.org"
+        "~/Dropbox/org/info.org"
+        "~/Dropbox/org/management.org"
+        "~/Dropbox/org/moleskine.org"
+        "~/Dropbox/org/periodicProgrammeReview.org"
+        "~/Dropbox/org/personal.org"
+        "~/Dropbox/org/research.org"
+        "~/Dropbox/org/spacemacsUserConfig.org"
+        "~/Dropbox/org/taxes.org"
+        "~/Dropbox/org/teaching.org"
+        "~/Dropbox/org/workload.org"))
+
+#+END_SRC
+
+
+** Appearance 
+
+*** Wrapping  
+
+Line wrapping please. Follow that, indentation (see [[https://stackoverflow.com/questions/1771981/how-to-keep-indentation-with-emacs-org-mode-visual-line-mode#1775652][this page]] for an explanation of this.)
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'toggle-truncate-lines)
+(setq org-startup-indented 't)
+#+END_SRC
+
+*** Blank lines
+
+Hide blank lines between headings.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-cycle-separator-lines 0)
+#+END_SRC
+
+** Todos
+
+*** Completed todos
+
+These should be logged.
+
+#+BEGIN_SRC emacs-lisp 
+(setq org-log-done t)
+#+END_SRC
+
+*** Todo keywords
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+      '(
+        (sequence "IDEA(i)" "TODO(t)" "STARTED(s)" "NEXT(n)" "WAITING(w@/!)" "|" "DONE(d!)")
+        (sequence "|" "CANCELED(c@)" "DELEGATED(g@/!)" "SOMEDAY(f)")
+        ))
+#+END_SRC
+
+** Babel
+
+Org Babel allow us to embed source code in org files and evaluate it.
+
+*** Languages 
+
+First, let's make sure Python is loaded and we've loaded Babel languages:
+
+- Python
+- Shell
+- Lisp
+
+#+BEGIN_SRC emacs-lisp
+  (require 'ob-python)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((python . t)
+     (shell . t)
+     (lisp . t)))
+#+END_SRC
+
+**** Python
+
+I've had some problems making sure that Org Babel uses the most up to date version of Python. Currently, for me, this is the one installed by the data science package Anaconda.
+
+#+BEGIN_SRC emacs-lisp 
+  (setq org-babel-python-command "/Users/ianuser/anaconda3/bin/python")
+#+END_SRC
+
+
+*** Evaluation
+
+Stop Org Babel asking me whether or not code should be evaluated. Just evaluate it.
+
+#+BEGIN_SRC emacs-lisp
+  
+  (setq org-confirm-babel-evaluate nil)
+
+#+END_SRC
+
+
+
+** Capture
+For more on capture templates, see [[ https://orgmode.org/manual/Capture-templates.html][the manual page on templates]].
+
+#+CAPTION: My capture settings
+#+NAME:    tab:capture
+| Capture   | Target         | Notes                                               |
+|-----------+----------------+-----------------------------------------------------|
+| Moleskine | moleskine.orgm | Dated, appended, headed TODO                        |
+| Meeting   | moleskine.org  | Dated, appended, headed MEETING                     |
+| Research  | research.org   | Dated, appended - intended for notes during reading |
+| Emacs/CLI | emacs.org      | Appended                                            |
+
+#+BEGIN_SRC emacs-lisp
+
+(setq org-capture-templates
+        (quote (
+                ;; Moleskine
+                ("m" "Moleskine" entry (file+datetree "~/Dropbox/org/moleskine.org")
+                 "* %?\nEntered on %U\n  %i\n  ")
+
+                ;; Meeting
+                ("M" "Meeting" entry (file+datetree "~/Dropbox/org/moleskine.org")
+                 "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
+
+                ;; Research
+                ("r" "Reading ([Reading Notes] in research.org)" entry (file+headline "~/Dropbox/org/research.org" "Reading Notes")
+                 "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
+
+                ;; Emacs/Command Line
+                ("e" "Emacs/CLI" entry (file "~/Dropbox/org/emacs.org" )
+                 "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
+
+                )
+               )
+        )
+
+
+#+END_SRC
+
+*** Refiling
+
+**** Path
+
+When refiling, I'd like whole the whole path to appear in Helm. (And we don't want to do this iteratively.)
+
+#+BEGIN_SRC emacs-lisp
+(setq org-refile-use-outline-path 'file)
+(setq org-outline-path-complete-in-steps nil) 
+#+END_SRC
+
+**** Targets
+
+Targets should include the current buffer as well as any file contributing to the agenda (up to nine levels deep in these files).
+
+#+BEGIN_SRC emacs-lisp
+(setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                 (org-agenda-files :maxlevel . 9))))
+#+END_SRC
+
+***** Verification
+
+Create a function that allows org to verify targets in a particular way (in this case, excluding TODO keywords with a DONE state). Then, given that we have this function, tell org to use it.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/verify-refile-target ()
+  "Exclude todo keywords with a done state from refile targets"
+  (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+(setq org-refile-target-verify-function 'my/verify-refile-target)
+#+END_SRC
+
+**** Parent tasks
+
+Allow refile to create parent tasks (with confirmation).
+
+#+BEGIN_SRC emacs-lisp
+(setq org-refile-allow-creating-parent-nodes (quote confirm))
+#+END_SRC
+** Export
+
+*** Fail Safe 
+
+If an org file contains broken links (e.g. to emails), don't stop the export.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-export-with-broken-links t)
+#+END_SRC
+
+** Screenshots
+
+We'd like an easy way to take a screenshot and include it in the current org file. The following takes a screenshot (using the Mac's native grabber), puts it as a timestamped file in the same directory as the org buffer and inserts a link.
+
+#+BEGIN_SRC emacs-lisp
+  (defun my/org-screenshot ()
+    "Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+    (interactive)
+    (org-display-inline-images)
+    (setq filename
+          (concat
+           (make-temp-name
+            (concat (file-name-nondirectory (buffer-file-name))
+                    "_imgs/"
+                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+    (unless (file-exists-p (file-name-directory filename))
+      (make-directory (file-name-directory filename)))
+                                        ; take screenshot
+    (if (eq system-type 'darwin)
+        (call-process "screencapture" nil nil nil "-i" filename))
+    (if (eq system-type 'gnu/linux)
+        (call-process "import" nil nil nil filename))
+                                        ; insert into file if correctly taken
+    (if (file-exists-p filename)
+        (insert (concat "[[file:" filename "]]"))))
+#+END_SRC
+
+** Reveal.js
+
+I've set the location of the Reveal.js as a remote one, and this applies to all presentations.
+
+#+BEGIN_SRC emacs-lisp 
+(setq org-reveal-root "http://cdn.jsdelivr.net/reveal.js/3.0.0/")
+#+END_SRC
+
+~HLEVEL~ is a parameter that means headings of this level appear on the horizontal axis of the 2D array preferred by ~Reveal.js~. Since I don't think I want anything to be 2D---preferring 1D---I can set this higher to get more of a horizontal presentation.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-reveal-hlevel 2)
+#+END_SRC
+
+* OS specific 
+
+We'd like the right option key on a Mac keyboard to be used for meta too. (This means that yasnippet expansion, for instance, is easy with meta-/.)
+
+#+BEGIN_SRC elisp
+(setq ns-right-option-modifier 'meta)
+#+END_SRC
+
+* Text
+** Mode changing
+
+*** Toggle
+
+Use ~jh~ to leave/enter insert mode.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default evil-escape-key-sequence "jh")
+#+END_SRC
+
+*** Reversibility
+
+Make ~evil-key-escape-sequence~ reversible, so I can mash it.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default evil-escape-unordered-key-sequence 't)
+#+END_SRC
+
+*** Interval
+
+Increase ~evil-key-escape-sequence~ time.
+
+#+BEGIN_SRC emacs-lisp 
+(setq-default evil-escape-delay 0.2)
+#+END_SRC
+
+** Spell check
+
+Enable spell checking for all text files. The spelling system we'll use is ~ispell~ with the English dictionary. (~ispell~ needs to be installed.) Note that, although I could install the programme on Ubuntu, I wasn't able to install a specifically British version; the macOS version, for some reason, has no problems with this.
+
+To look up alternative spellings, make sure the mispelled word is highlighted and use ~z=~.
+
+New words can be added to a personal dictionary.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'text-mode-hook 'flyspell-mode)
+(setq ispell-program-name "ispell")
+(setq ispell-dictionary "english")
+#+END_SRC
+** Word wrap
+
+This wrapping code should happen in all text modes.
+
+- First, we have a word wrap function that sets word wrap. 
+- Then we make sure the function is used whenever we are in text mode.
+
+#+BEGIN_SRC emacs-lisp
+(defun my/enable-word-wrap ()
+  (setq-local word-wrap t))
+   
+(add-hook 'text-mode-hook #'my/enable-word-wrap)
+#+END_SRC
+
+* Warnings
+
+The following will stop Spacemacs from producing a warning at startup that I can't seem to do much about and doesn't seem that serious. See [http://spacemacs.org/doc/FAQ.html] 
+
+#+begin_src emacs-lisp
+(setq exec-path-from-shell-check-startup-files nil)
+#+end_src
+
+
+
+
