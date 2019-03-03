@@ -22,8 +22,8 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 * Notes on Usage
 
 ** Tags
-At the moment, we're not setting tags here. That seems to invoke Helm, and I prefer the tag splash screen.  
-- It seems that if at least one local TAG is set in a file, you will get the splash screen.
+At the moment, we're not setting tags in this configuration file. Setting them globally seems to invoke Helm, and I prefer the tag splash screen.  
+- It seems that if at least one local tag is set in a file, you will get the splash screen.
 
 * Applications
 ** Deft
