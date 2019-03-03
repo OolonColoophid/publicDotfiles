@@ -2,7 +2,7 @@
 
 ;; It is called from ~/.spacemacs by:
 
-;; (load "~/Dropbox/shellShared/.spacemacsUserConfig")
+;; (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
 
 (setq deft-extension "org")
 

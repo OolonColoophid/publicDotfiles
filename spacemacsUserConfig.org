@@ -15,7 +15,7 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 ;; It is called from ~/.spacemacs by:
 
-;; (load "~/Dropbox/shellShared/.spacemacsUserConfig")
+;; (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
 
 #+END_SRC
 
@@ -400,7 +400,7 @@ For more on capture templates, see [[ https://orgmode.org/manual/Capture-templat
 #+NAME:    tab:capture
 | Capture   | Target         | Notes                                               |
 |-----------+----------------+-----------------------------------------------------|
-| Moleskine | moleskine.orgm | Dated, appended, headed TODO                        |
+| Moleskine | moleskine.org  | Dated, appended, headed TODO                        |
 | Meeting   | moleskine.org  | Dated, appended, headed MEETING                     |
 | Research  | research.org   | Dated, appended - intended for notes during reading |
 | Emacs/CLI | emacs.org      | Appended                                            |
