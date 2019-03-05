@@ -477,7 +477,7 @@ Let's use the following agenda files, which will be scanned when producing an ag
         "~/Dropbox/org/periodicProgrammeReview.org"
         "~/Dropbox/org/personal.org"
         "~/Dropbox/org/research.org"
-        "~/Dropbox/publicDotfiles/spacemacsUserConfig.org"
+        "~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org"
         "~/Dropbox/org/taxes.org"
         "~/Dropbox/org/teaching.org"
         "~/Dropbox/org/workload.org"))
