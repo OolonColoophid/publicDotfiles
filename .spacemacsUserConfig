@@ -344,6 +344,6 @@ user-full-name "Dr Ian Hocking"
         )
 
 (when (string= (system-name) "archipelago")
-    (run-with-idle-timer 2160 1 'org-store-agenda-views))
+    (run-with-idle-timer 21600 1 'org-store-agenda-views))
 
 (setq ns-right-option-modifier 'meta)

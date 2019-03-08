@@ -362,6 +362,8 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 
 There is more on creating custom agenda views here: https://orgmode.org/worg/org-tutorials/org-custom-agenda-commands.html
 
+Remember that these custom agenda views are only exported to files *en masse* when the command ~org-store-agenda-views~ is run.
+
 #+BEGIN_SRC elisp
 (setq org-agenda-custom-commands
         `(
@@ -445,20 +447,13 @@ There is more on creating custom agenda views here: https://orgmode.org/worg/org
 
 #+END_SRC
 
-**** TODO Fix ~org-agenda-custom-commands~ for 'everything'
-This is not currently producing an .ics. It did until 22 Feb. I've gone back to an earlier working version of the code, but running it still doesn't work. This suggests the code is fine. What's changed? The .org files in the agenda, presumably; one of aspect of these is causing the output to fail.
-
-Note that the 'anniversairies' custom command does work.
-
-Solution probably involves rebuilding the 'everything' code from scratch.
-
 *** Automatic Export
 
-I have one Emacs system that I'd like to be doing this (Archipelago). This should be after 2160 seconds, or 36 mins of idle time.
+I have one Emacs system that I'd like to be doing this (Archipelago). This should be after 21600 seconds, or 3 hours of idle time.
 
 #+BEGIN_SRC elisp
 (when (string= (system-name) "archipelago")
-    (run-with-idle-timer 2160 1 'org-store-agenda-views))
+    (run-with-idle-timer 21600 1 'org-store-agenda-views))
 #+END_SRC
 
 ** Files
