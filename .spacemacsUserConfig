@@ -177,7 +177,7 @@ same directory as the org-buffer and insert a link to this file."
 (defun my/tangle-dotfiles ()
   "If the current file is in '~/Dropbox/shellShared/publicDotfiles', the code blocks are tangled"
   (when (equal (file-name-directory (directory-file-name buffer-file-name))
-               (concat (getenv "HOME") "Dropbox/shellShared/publicDotfiles/"))
+               (concat (getenv "HOME") "/Dropbox/shellShared/publicDotfiles/"))
     (org-babel-tangle)
     (message "%s tangled" buffer-file-name)))
 
