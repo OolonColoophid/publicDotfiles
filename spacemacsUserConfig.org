@@ -19,7 +19,7 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 #+END_SRC
 
-** ../Dropbox/shellShared/publicDotfiles/spaceMacsUserConfig.org 
+** ../Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org 
 
 - Org format with Elisp code blocks for user configuration options within the ~.spacemacs~ function ~dotspacemacs/userconfig~.
 - When tangled, this file produces:
@@ -32,6 +32,21 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 ** ../Dropbox/shellShared/.spacemacs
 
 - Elisp file containing all configuration for my Spacemacs installation.
+
+*** Auto tangle this file
+
+The following code creates a function to automatically tangle ~spacemacsUserConfig.org~ when saving it. (Specifically, any file saved to ~publicDotfiles~ will be tangled.) This is useful in case I make a change but forget to tangle manually. Solution acquired from [[https://emacs.stackexchange.com/questions/20707/automatically-tangle-org-files-in-a-specific-directory/20733#20733][here]].
+
+#+BEGIN_SRC elisp
+(defun my/tangle-dotfiles ()
+  "If the current file is in '~/Dropbox/shellShared/publicDotfiles', the code blocks are tangled"
+  (when (equal (file-name-directory (directory-file-name buffer-file-name))
+               (concat (getenv "HOME") "Dropbox/shellShared/publicDotfiles/"))
+    (org-babel-tangle)
+    (message "%s tangled" buffer-file-name)))
+
+(add-hook 'after-save-hook #'my/tangle-dotfiles)
+#+END_SRC
 
 * Applications
 ** Deft
