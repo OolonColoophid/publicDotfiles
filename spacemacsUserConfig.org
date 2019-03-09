@@ -19,12 +19,6 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 #+END_SRC
 
-* Notes on Usage
-
-** Tags
-At the moment, we're not setting tags in this configuration file. Setting them globally seems to invoke Helm, and I prefer the tag splash screen.  
-- It seems that if at least one local tag is set in a file, you will get the splash screen.
-
 * Applications
 ** Deft
 *** Extension
@@ -253,6 +247,10 @@ Close a message after it is sent; don't ask for context when opening mu4e; don't
 #+END_SRC
 
 * Behaviour
+** Tags
+At the moment, we're not setting tags in this configuration file. Setting them globally seems to invoke Helm, and I prefer the tag splash screen.  
+- It seems that if at least one local tag is set in a file, you will get the splash screen.
+
 ** Line Spacing and Sentence Boundary
 
 Let's have nicer line spacing (the value below is the number of pixels between lines on graphical displays). We'd also like Emacs to treat sentences as finishing with one space.
