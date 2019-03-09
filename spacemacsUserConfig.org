@@ -48,6 +48,7 @@ The following code creates a function to automatically tangle ~spacemacsUserConf
 (add-hook 'after-save-hook #'my/tangle-dotfiles)
 #+END_SRC
 
+**** TODO Include other configuration information in this document
 * Applications
 ** Deft
 *** Extension
@@ -241,7 +242,7 @@ Note that 'with-eval-after-load' makes sure that the mu4e is loaded first before
 
 **** Sending
 
-Note that my username is set privately in my .spacemacs file.
+Note that my username is set privately elsewhere.
 
 #+BEGIN_SRC elisp
   (require 'smtpmail)
