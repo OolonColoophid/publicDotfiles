@@ -392,85 +392,104 @@ There is more on creating custom agenda views here: https://orgmode.org/worg/org
 
 Remember that these custom agenda views are only exported to files *en masse* when the command ~org-store-agenda-views~ is run.
 
+[[https://github.com/alphapapa/org-super-agenda][~Org-super-agenda~]] allows us to categorise the agenda according to grouping criteria such as tags. 
+
 #+BEGIN_SRC elisp
-(setq org-agenda-custom-commands
-        `(
-           ;; show everything
-           ("ie"                                         ;; key is e
-            "[e]verything"                               ;; description
-            tags                                         ;; results type; this seems to allow better ics export
-            "*"                                          ;; search term (reg ex; search everything)
-              ((org-icalendar-categories (quote (all-tags local-tags category todo-state)))
-               (org-icalendar-exclude-tags '("anniversary"))
-               (org-icalendar-include-body 180)
-               (org-icalendar-include-todo t))
-               ("~/Dropbox/orgExport/orgAll.ics")
-           )
+  (setq org-agenda-custom-commands
+          `(
+             ;; show everything
+             ("ie"                                         ;; key is e
+              "[e]verything"                               ;; description
+              tags                                         ;; results type; this seems to allow better ics export
+              "*"                                          ;; search term (reg ex; search everything)
+                ((org-icalendar-categories (quote (all-tags local-tags category todo-state)))
+                 (org-icalendar-exclude-tags '("anniversary"))
+                 (org-icalendar-include-body 180)
+                 (org-icalendar-include-todo t))
+                 ("~/Dropbox/orgExport/orgAll.ics")
+             )
 
-          ("it"                                                              ;; key is t
-           "[t]odo, all types, unscheduled"                                  ;; description
-           tags                                                              ;; search by
-           "-DEADLINE={.+}/!+IDEA|+TODO|+STARTED|+NEXT|+WAITING|+DELEGATED"  ;; criteria
-           nil                                                               ;; org variables
-           ("~/Dropbox/orgExport/allTodos.html"))                            ;; file to export
+            ("it"                                                              ;; key is t
+             "[t]odo, all types, unscheduled"                                  ;; description
+             tags                                                              ;; search by
+             "-DEADLINE={.+}/!+IDEA|+TODO|+STARTED|+NEXT|+WAITING|+DELEGATED"  ;; criteria
+             nil                                                               ;; org variables
+             ("~/Dropbox/orgExport/allTodos.html"))                            ;; file to export
 
-          ("id"                                                              ;; key is d
-           "[d]one, all types"                                               ;; description
-           agenda                                                            ;; type
-           ""                                                                ;; criteria
-           ((org-agenda-start-with-log-mode t)                               ;; show done in agenda
-            (org-agenda-skip-function
-            '(org-agenda-skip-entry-if 'nottodo 'done)))
-            ("~/Dropbox/orgExport/allDone.html"))                            ;; file to export
+            ("id"                                                              ;; key is d
+             "[d]one, all types"                                               ;; description
+             agenda                                                            ;; type
+             ""                                                                ;; criteria
+             ((org-agenda-start-with-log-mode t)                               ;; show done in agenda
+              (org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'nottodo 'done)))
+              ("~/Dropbox/orgExport/allDone.html"))                            ;; file to export
 
-          ;; Seee https://emacs.stackexchange.com/questions/8150/show-done-items-in-current-calendar-week
+            ;; Seee https://emacs.stackexchange.com/questions/8150/show-done-items-in-current-calendar-week
 
-          ;; assessment - show exams; agenda view
-          ("iE"                                         ;; key is E
-           "[E]xams for the next month"                 ;; description
-           agenda                                       ;; results type
-           nil                                          ;; search term
-           ((org-agenda-span 28)                        ;; show next 28 days
-            (org-agenda-tag-filter-preset '("+exams"))) ;; limit to tag 'exams'
-           ("~/Dropbox/orgExport/exams.html")
-           )
+            ;; assessment - show exams; agenda view
+            ("iE"                                         ;; key is E
+             "[E]xams for the next month"                 ;; description
+             agenda                                       ;; results type
+             nil                                          ;; search term
+             ((org-agenda-span 28)                        ;; show next 28 days
+              (org-agenda-tag-filter-preset '("+exams"))) ;; limit to tag 'exams'
+             ("~/Dropbox/orgExport/exams.html")
+             )
 
-          ;; assessment - show submissions; agenda view
-          ("is"                                         ;; key is s
-           "[s]ubsmissions for the next month"          ;; description
-           agenda                                       ;; results type
-           nil                                          ;; search term
-           ((org-agenda-span 28)                        ;; show next 28 days
-            (org-agenda-tag-filter-preset '("+submission"))
+            ;; assessment - show submissions; agenda view
+            ("is"                                         ;; key is s
+             "[s]ubsmissions for the next month"          ;; description
+             agenda                                       ;; results type
+             nil                                          ;; search term
+             ((org-agenda-span 28)                        ;; show next 28 days
+              (org-agenda-tag-filter-preset '("+submission"))
+              )
+             ("~/Dropbox/orgExport/submission.html")
+             )
+
+            ;; assessment - show feedback; agenda view
+            ("if"                                         ;; key is f
+             "[f]eedback for the next month"              ;; description
+             agenda                                       ;; results type
+             nil                                          ;; search term
+             ((org-agenda-span 28)                        ;; show next 28 days
+              (org-agenda-tag-filter-preset '("+feedback"))
+              )
+             ("~/Dropbox/orgExport/feedback.html")
+             )
+
+            ;; birthdays and anniversaries - show feedback; agenda view
+            ("ia"                                         ;; key is a
+             "[a]anniveraries for the next 90 days"       ;; description
+             agenda                                       ;; results type
+             nil                                          ;; search term
+             ((org-agenda-show-all-dates nil)
+              (org-agenda-start-day "2019-01-01")
+              (org-agenda-span 365)                        ;; show next year days
+              (org-agenda-tag-filter-preset '("+anniversary"))
+              )
+             ("~/Dropbox/orgExport/anniversaries.ics")
+             )
+
+            ("ic" "Super Agenda" agenda
+             (org-super-agenda-mode)
+             ((org-super-agenda-groups
+               '(
+                 (:name "@live"
+                        :tag ("@live"))
+                 (:name "University GMS Events"
+                        :tag ("GMS"))
+                 (:name "Research"
+                        :tag ("Research"))
+                 (:name "Assessment: Submissions"
+                        :tag ("submission"))
+                 (:name "Assessment: Feedback"
+                        :tag ("feedback"))
+                 )))
+             (org-agenda nil "a"))
             )
-           ("~/Dropbox/orgExport/submission.html")
-           )
-
-          ;; assessment - show feedback; agenda view
-          ("if"                                         ;; key is f
-           "[f]eedback for the next month"              ;; description
-           agenda                                       ;; results type
-           nil                                          ;; search term
-           ((org-agenda-span 28)                        ;; show next 28 days
-            (org-agenda-tag-filter-preset '("+feedback"))
-            )
-           ("~/Dropbox/orgExport/feedback.html")
-           )
-
-          ;; birthdays and anniversaries - show feedback; agenda view
-          ("ia"                                         ;; key is a
-           "[a]anniveraries for the next 90 days"       ;; description
-           agenda                                       ;; results type
-           nil                                          ;; search term
-           ((org-agenda-show-all-dates nil)
-            (org-agenda-start-day "2019-01-01")
-            (org-agenda-span 365)                        ;; show next year days
-            (org-agenda-tag-filter-preset '("+anniversary"))
-            )
-           ("~/Dropbox/orgExport/anniversaries.ics")
-           )
-          )
-        ) 
+          ) 
 
 
 #+END_SRC
@@ -483,6 +502,7 @@ I have one Emacs system that I'd like to be doing this (Archipelago). This shoul
 (when (string= (system-name) "archipelago")
     (run-with-idle-timer 21600 1 'org-store-agenda-views))
 #+END_SRC
+
 
 ** Files
 

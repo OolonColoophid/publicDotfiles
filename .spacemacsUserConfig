@@ -349,6 +349,23 @@ user-full-name "Dr Ian Hocking"
             )
            ("~/Dropbox/orgExport/anniversaries.ics")
            )
+
+          ("ic" "Super Agenda" agenda
+           (org-super-agenda-mode)
+           ((org-super-agenda-groups
+             '(
+               (:name "@live"
+                      :tag ("@live"))
+               (:name "University GMS Events"
+                      :tag ("GMS"))
+               (:name "Research"
+                      :tag ("Research"))
+               (:name "Assessment: Submissions"
+                      :tag ("submission"))
+               (:name "Assessment: Feedback"
+                      :tag ("feedback"))
+               )))
+           (org-agenda nil "a"))
           )
         )
 
