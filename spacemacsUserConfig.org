@@ -37,6 +37,8 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 The following code creates a function to automatically tangle ~spacemacsUserConfig.org~ when saving it. (Specifically, any file saved to ~publicDotfiles~ will be tangled.) This is useful in case I make a change but forget to tangle manually. Solution acquired from [[https://emacs.stackexchange.com/questions/20707/automatically-tangle-org-files-in-a-specific-directory/20733#20733][here]].
 
+
+
 #+BEGIN_SRC elisp
   (defun my/tangle-auto ()
     "If the current file is in specified directories, the code blocks are tangled"
@@ -55,7 +57,6 @@ The following code creates a function to automatically tangle ~spacemacsUserConf
   (add-hook 'after-save-hook #'my/tangle-auto)
 #+END_SRC
 
-**** TODO Include other configuration information in this document
 * Applications
 ** Deft
 *** Extension
