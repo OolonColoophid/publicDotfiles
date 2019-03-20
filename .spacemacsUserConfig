@@ -174,21 +174,14 @@ same directory as the org-buffer and insert a link to this file."
 
 (setq exec-path-from-shell-check-startup-files nil)
 
-(defun my/tangle-auto ()
-  "If the current file is in specified directories, the code blocks are tangled"
+(defun my/tangle-dotfiles ()
+  "If the current file is in '~/Dropbox/shellShared/publicDotfiles', the code blocks are tangled"
   (when (equal (file-name-directory (directory-file-name buffer-file-name))
                (concat (getenv "HOME") "/Dropbox/shellShared/publicDotfiles/"))
     (org-babel-tangle)
-    (message "%s tangled" buffer-file-name))
+    (message "%s tangled" buffer-file-name)))
 
-  (when (equal (file-name-directory (directory-file-name buffer-file-name))
-               (concat (getenv "HOME") "/Dropbox/Documents/Programming/python/pythonProgrammingBeginnerBook/chapter3"))
-    (org-babel-tangle)
-    (message "%s tangled" buffer-file-name))
-
-  )
-
-(add-hook 'after-save-hook #'my/tangle-auto)
+(add-hook 'after-save-hook #'my/tangle-dotfiles)
 
 (add-hook 'after-init-hook 'mu4e-alert-enable-mode-line-display)
 
