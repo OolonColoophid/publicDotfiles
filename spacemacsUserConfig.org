@@ -38,14 +38,21 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 The following code creates a function to automatically tangle ~spacemacsUserConfig.org~ when saving it. (Specifically, any file saved to ~publicDotfiles~ will be tangled.) This is useful in case I make a change but forget to tangle manually. Solution acquired from [[https://emacs.stackexchange.com/questions/20707/automatically-tangle-org-files-in-a-specific-directory/20733#20733][here]].
 
 #+BEGIN_SRC elisp
-(defun my/tangle-dotfiles ()
-  "If the current file is in '~/Dropbox/shellShared/publicDotfiles', the code blocks are tangled"
-  (when (equal (file-name-directory (directory-file-name buffer-file-name))
-               (concat (getenv "HOME") "/Dropbox/shellShared/publicDotfiles/"))
-    (org-babel-tangle)
-    (message "%s tangled" buffer-file-name)))
+  (defun my/tangle-auto ()
+    "If the current file is in specified directories, the code blocks are tangled"
+    (when (equal (file-name-directory (directory-file-name buffer-file-name))
+                 (concat (getenv "HOME") "/Dropbox/shellShared/publicDotfiles/"))
+      (org-babel-tangle)
+      (message "%s tangled" buffer-file-name))
 
-(add-hook 'after-save-hook #'my/tangle-dotfiles)
+    (when (equal (file-name-directory (directory-file-name buffer-file-name))
+                 (concat (getenv "HOME") "/Dropbox/Documents/Programming/python/pythonProgrammingBeginnerBook/chapter3"))
+      (org-babel-tangle)
+      (message "%s tangled" buffer-file-name))
+
+    )
+
+  (add-hook 'after-save-hook #'my/tangle-auto)
 #+END_SRC
 
 **** TODO Include other configuration information in this document
@@ -815,7 +822,6 @@ The following will stop Spacemacs from producing a warning at startup that I can
 #+begin_src emacs-lisp
 (setq exec-path-from-shell-check-startup-files nil)
 #+end_src
-
 
 
 
