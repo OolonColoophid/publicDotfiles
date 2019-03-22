@@ -176,15 +176,6 @@ same directory as the org-buffer and insert a link to this file."
 
 (setq exec-path-from-shell-check-startup-files nil)
 
-(defun my/tangle-dotfiles ()
-  "If the current file is in '~/Dropbox/shellShared/publicDotfiles', the code blocks are tangled"
-  (when (equal (file-name-directory (directory-file-name buffer-file-name))
-               (concat (getenv "HOME") "/Dropbox/shellShared/publicDotfiles/"))
-    (org-babel-tangle)
-    (message "%s tangled" buffer-file-name)))
-
-(add-hook 'after-save-hook #'my/tangle-dotfiles)
-
 (add-hook 'after-init-hook 'mu4e-alert-enable-mode-line-display)
 
 (setq org-mu4e-link-query-in-headers-mode nil)
@@ -288,6 +279,15 @@ user-full-name "Dr Ian Hocking"
     (when (get-buffer "spacemacsUserConfig.org")
       (switch-to-buffer "spacemacsUserConfig.org"))
   )
+
+(defun my/tangle-dotfiles ()
+  "If the current file is in '~/Dropbox/shellShared/publicDotfiles', the code blocks are tangled"
+  (when (equal (file-name-directory (directory-file-name buffer-file-name))
+               (concat (getenv "HOME") "/Dropbox/shellShared/publicDotfiles/"))
+    (org-babel-tangle)
+    (message "%s tangled" buffer-file-name)))
+
+(add-hook 'after-save-hook #'my/tangle-dotfiles)
 
 (setq org-agenda-custom-commands
         `(
