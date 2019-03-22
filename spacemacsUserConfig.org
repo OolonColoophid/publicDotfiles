@@ -264,6 +264,8 @@ Close a message after it is sent; don't ask for context when opening mu4e; don't
 
 ** Edit my Spacemacs settings
 
+Provide me with three files. The ~org~ literate programming file ('~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org'), the tangled output of that ('~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig'), and the full ~.spacemacs~ configuration file ('~/Dropbox/shellShared/publicDotfiles/.spacemacs').
+
 #+BEGIN_SRC elisp
   (defun my/spacemacs-configuration-edit ()
     "Load my .spacemacs and spacemacsUserConfig.org files"
