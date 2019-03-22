@@ -21,7 +21,7 @@
 
 (setq auto-save-interval 20)
 
-(defun my-close-all-buffers ()
+(defun my/close-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
 
@@ -31,7 +31,7 @@
 
 (setq ranger-override-dired-mode 't)
 
-(evil-leader/set-key "bq" 'my-close-all-buffers)
+(evil-leader/set-key "bq" 'my/close-all-buffers)
 
 (define-key evil-normal-state-map (kbd "S-<up>") 'org-move-subtree-up)
 (define-key evil-normal-state-map (kbd "S-<down>") 'org-move-subtree-down)
@@ -44,6 +44,8 @@
 
 (evil-leader/set-key "mii" 'my/org-screenshot)
 
+(spacemacs/declare-prefix "d" "user")
+(evil-leader/set-key "dd" 'my/spacemacs-configuration-edit)
 
 ;; Make movement keys work like they 'should' on long lines
 (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
@@ -272,6 +274,20 @@ user-full-name "Dr Ian Hocking"
 (setq mu4e-context-policy 'pick-first)
 ;; Don't ask to quit... why is this the default?
 (setq mu4e-confirm-quit nil)
+
+(defun my/spacemacs-configuration-edit ()
+  "Load my .spacemacs and spacemacsUserConfig.org files"
+  (interactive)
+  (unless (get-buffer "spacemacsUserConfig.org")
+    (find-file "~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org")
+    (split-window-right-and-focus)
+    (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacs")
+    (split-window-below-and-focus)
+    (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+    (evil-window-left 1))
+    (when (get-buffer "spacemacsUserConfig.org")
+      (switch-to-buffer "spacemacsUserConfig.org"))
+  )
 
 (setq org-agenda-custom-commands
         `(

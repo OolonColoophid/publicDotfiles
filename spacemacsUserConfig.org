@@ -48,7 +48,6 @@ The following code creates a function to automatically tangle ~spacemacsUserConf
 (add-hook 'after-save-hook #'my/tangle-dotfiles)
 #+END_SRC
 
-**** TODO Include other configuration information in this document
 * Applications
 ** Deft
 *** Extension
@@ -276,6 +275,26 @@ Close a message after it is sent; don't ask for context when opening mu4e; don't
   (setq mu4e-confirm-quit nil)
 #+END_SRC
 
+* Custom Functions
+
+** Edit my Spacemacs settings
+
+#+BEGIN_SRC elisp
+  (defun my/spacemacs-configuration-edit ()
+    "Load my .spacemacs and spacemacsUserConfig.org files"
+    (interactive)
+    (unless (get-buffer "spacemacsUserConfig.org")
+      (find-file "~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org")
+      (split-window-right-and-focus)
+      (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacs")
+      (split-window-below-and-focus)
+      (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+      (evil-window-left 1))
+      (when (get-buffer "spacemacsUserConfig.org")
+        (switch-to-buffer "spacemacsUserConfig.org"))
+    )
+#+END_SRC
+
 * Behaviour
 ** Tags
 At the moment, we're not setting tags in this configuration file. Setting them globally seems to invoke Helm, and I prefer the tag splash screen.  
@@ -310,7 +329,7 @@ I'd prefer to use Emacs as though the buffer is 'live'. Autosaving can also help
 The following function will allow me to close all buffers quickly if I need to. This is bound to a key described below.
 
 #+BEGIN_SRC emacs-lisp
-(defun my-close-all-buffers ()
+(defun my/close-all-buffers ()
   (interactive)
   (mapc 'kill-buffer (buffer-list)))
 #+END_SRC
@@ -348,20 +367,21 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 
 #+CAPTION: My keybindings
 #+NAME:    tab:keybindings
-| Key         | Fucntion                        | Description                       |
-|-------------+---------------------------------+-----------------------------------|
-| bq          | my-close-all-buffers            | Close all buffers                 |
-| CTRL-C c g  | org-mac-grab-link               | Capture link from external source |
-| SHIFT-up    | org-move-subtree-up             | Move current heading upwards      |
-| SHIFT-down  | org-move-subtree-down           | Move current heading down         |
-| SHIFT-left  | org-promote-subtree             | Promote current heading           |
-| SHIFT-right | org-demote-subtree              | Demote current heading            |
-| CTRL-c .    | org-agenda-transient-state/body | Agenda transient state            |
-| SPC-m i i   | my/org-screenshot               | Take screenshot and insert        |
+| Key         | Fucntion                                | Description                       |
+|-------------+-----------------------------------------+-----------------------------------|
+| SPC-bq      | my/close-all-buffers                    | Close all buffers                 |
+| CTRL-C c g  | org-mac-grab-link                       | Capture link from external source |
+| SHIFT-up    | org-move-subtree-up                     | Move current heading upwards      |
+| SHIFT-down  | org-move-subtree-down                   | Move current heading down         |
+| SHIFT-left  | org-promote-subtree                     | Promote current heading           |
+| SHIFT-right | org-demote-subtree                      | Demote current heading            |
+| CTRL-c .    | org-agenda-transient-state/body         | Agenda transient state            |
+| SPC-m i i   | my/org-screenshot                       | Take screenshot and insert        |
+| SPC-d d     | my/spacemacs-configuration-edit | Edit my Spacemacs configuration   |
 
 #+BEGIN_SRC emacs-lisp 
 
-(evil-leader/set-key "bq" 'my-close-all-buffers)
+(evil-leader/set-key "bq" 'my/close-all-buffers)
 
 (define-key evil-normal-state-map (kbd "S-<up>") 'org-move-subtree-up)
 (define-key evil-normal-state-map (kbd "S-<down>") 'org-move-subtree-down)
@@ -374,6 +394,8 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 
 (evil-leader/set-key "mii" 'my/org-screenshot)
 
+(spacemacs/declare-prefix "d" "user")
+(evil-leader/set-key "dd" 'my/spacemacs-configuration-edit)
 
 ;; Make movement keys work like they 'should' on long lines
 (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
