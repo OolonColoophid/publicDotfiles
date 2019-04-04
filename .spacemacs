@@ -75,6 +75,7 @@ values."
                                       (yasnippet-snippets)
                                       (ox-hugo)
                                       (org-super-agenda)
+                                      (org-ref)
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -388,7 +389,7 @@ you should place your code here."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(org-agenda-files
    (quote
-    ("~/Dropbox/org/career.org" "~/Dropbox/org/emacs.org" "~/Dropbox/org/info.org" "~/Dropbox/org/management.org" "~/Dropbox/org/moleskine.org" "~/Dropbox/org/periodicProgrammeReview.org" "~/Dropbox/org/personal.org" "~/Dropbox/org/research.org" "~/Dropbox/org/taxes.org" "~/Dropbox/org/teaching.org")))
+    ("~/Dropbox/org/moleskine.org" "~/Dropbox/org/career.org" "~/Dropbox/org/emacs.org" "~/Dropbox/org/info.org" "~/Dropbox/org/management.org" "~/Dropbox/org/periodicProgrammeReview.org" "~/Dropbox/org/personal.org" "~/Dropbox/org/research.org" "~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org" "~/Dropbox/org/taxes.org" "~/Dropbox/org/teaching.org" "~/Dropbox/org/workload.org")))
  '(org-latex-prefer-user-labels t)
  '(org-mac-Skim-highlight-selection-p nil)
  '(org-mac-grab-Acrobat-app-p nil)

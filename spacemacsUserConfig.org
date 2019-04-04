@@ -527,7 +527,6 @@ I have one Emacs system that I'd like to be doing this (Archipelago). This shoul
     (run-with-idle-timer 21600 1 'org-store-agenda-views))
 #+END_SRC
 
-
 ** Files
 
 *** Org directory
@@ -558,6 +557,49 @@ Let's use the following agenda files, which will be scanned when producing an ag
 
 #+END_SRC
 
+
+** Referencing
+
+I'm using package ~org-ref~.
+
+Set location of my bibliography:
+
+#+BEGIN_SRC elisp
+(setq reftex-default-bibliography '("~/Dropbox/CCCU/text/biblio/myLibrary.bib"))
+#+END_SRC
+
+Not yet sure how this differs from the above.
+
+#+BEGIN_SRC elisp
+(setq org-ref-default-bibliography '("~/Dropbox/CCCU/text/biblio/myLibrary.bib"))
+#+END_SRC
+
+Helping completion work:
+
+#+BEGIN_SRC elisp
+(setq bibtex-completion-bibliography "~/Dropbox/CCCU/text/biblio/myLibrary.bib")
+#+END_SRC
+
+The following should help to export using Latex.
+
+#+BEGIN_SRC elisp
+(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+#+END_SRC
+
+*** Basic Usage
+
+Use ~C-c ]~ to insert a citation. It takes this form:
+
+#+BEGIN_QUOTE
+cite:vernon_thinking_2014
+#+END_QUOTE
+
+At the end of the file, a bibliography is created with the following:
+
+#+BEGIN_QUOTE
+bibliographystyle:unsrt
+bibliography:~/Dropbox/CCCU/text/biblio/myLibrary.bib
+#+END_QUOTE
 
 ** Appearance 
 

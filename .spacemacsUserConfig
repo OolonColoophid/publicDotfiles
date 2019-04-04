@@ -388,4 +388,12 @@ user-full-name "Dr Ian Hocking"
 (when (string= (system-name) "archipelago")
     (run-with-idle-timer 21600 1 'org-store-agenda-views))
 
+(setq reftex-default-bibliography '("~/Dropbox/CCCU/text/biblio/myLibrary.bib"))
+
+(setq org-ref-default-bibliography '("~/Dropbox/CCCU/text/biblio/myLibrary.bib"))
+
+(setq bibtex-completion-bibliography "~/Dropbox/CCCU/text/biblio/myLibrary.bib")
+
+(setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+
 (setq ns-right-option-modifier 'meta)
