@@ -9,6 +9,7 @@
 
 This is a literate coding file in org format. When tangled with ~org-babel-tangle~, it will take the source blocks below and tangle them into a single elisp file called ~.spacemacsUserConfig~ (currently stored on Dropbox), which will then be loaded when Spacemacs starts as part of the function ~user-config~. 
 
+
 #+BEGIN_SRC emacs-lisp
 
 ;; This file has been tangled from .spacemacsUserConfig.org 
@@ -33,6 +34,11 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 - Elisp file containing all configuration for my Spacemacs installation.
 
+** Privacy
+
+The files ~.spacemacs~, ~.spacemacsUserConfig~ and ~spacemacsUserConfig.org~ are publicly viewable. 
+
+Private files should be placed in ~/Dropbox/shellShared/publicDotfiles/private~.
 * Applications
 ** Deft
 *** Extension
