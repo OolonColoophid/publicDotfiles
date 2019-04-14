@@ -651,14 +651,16 @@ First, let's make sure Python is loaded and we've loaded Babel languages:
 - Python
 - Shell
 - Lisp
+- R
 
 #+BEGIN_SRC emacs-lisp
-  (require 'ob-python)
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((python . t)
-     (shell . t)
-     (lisp . t)))
+    (require 'ob-python)
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((python . t)
+       (shell . t)
+       (lisp . t)
+       (R .t)))
 #+END_SRC
 
 **** Python
