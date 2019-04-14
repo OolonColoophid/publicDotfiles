@@ -540,6 +540,15 @@ I have one Emacs system that I'd like to be doing this (Archipelago). This shoul
     (run-with-idle-timer 21600 1 'org-store-agenda-views))
 #+END_SRC
 
+** Blogging
+
+I've using ~org2blog~. 
+
+The user settings for this are in the ~/private~ directory. 
+
+In Spacemacs, ~org2blog~ needed to added as an additional package, unsurprisingly, as
+well as ~xml-rpc~ ~metaweblog~ and ~htmlize~. All are available on Melpa.
+
 ** Files
 
 *** Org directory
