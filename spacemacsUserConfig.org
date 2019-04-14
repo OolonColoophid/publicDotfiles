@@ -289,6 +289,8 @@ Provide me with three files. The ~org~ literate programming file ('~/Dropbox/she
       (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacs")
       (split-window-below-and-focus)
       (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el")
+      (split-window-below-and-focus)
+      (find-file "~/Dropbox/shellShared/publicDotfiles/private/privateConfig.el")
       (evil-window-left 1))
       (when (get-buffer "spacemacsUserConfig.org")
         (switch-to-buffer "spacemacsUserConfig.org"))
@@ -309,6 +311,9 @@ The following code creates a function to automatically tangle ~spacemacsUserConf
 
 (add-hook 'after-save-hook #'my/tangle-dotfiles)
 #+END_SRC
+
+
+
 
 * Behaviour
 ** Tags
@@ -367,6 +372,8 @@ The hash is a very important key in Emacs. Without the following code, which all
 (setq ns-right-alternate-modifier (quote none))
 #+END_SRC
 
+
+
 * File management
 ** Ranger
 
@@ -382,17 +389,23 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 
 #+CAPTION: My keybindings
 #+NAME:    tab:keybindings
-| Key         | Fucntion                                | Description                       |
-|-------------+-----------------------------------------+-----------------------------------|
-| SPC-bq      | my/close-all-buffers                    | Close all buffers                 |
-| CTRL-C c g  | org-mac-grab-link                       | Capture link from external source |
-| SHIFT-up    | org-move-subtree-up                     | Move current heading upwards      |
-| SHIFT-down  | org-move-subtree-down                   | Move current heading down         |
-| SHIFT-left  | org-promote-subtree                     | Promote current heading           |
-| SHIFT-right | org-demote-subtree                      | Demote current heading            |
-| CTRL-c .    | org-agenda-transient-state/body         | Agenda transient state            |
-| SPC-m i i   | my/org-screenshot                       | Take screenshot and insert        |
-| SPC-d d     | my/spacemacs-configuration-edit | Edit my Spacemacs configuration   |
+| Key           | Fucntion                             | Description                       |
+|---------------+--------------------------------------+-----------------------------------|
+| SPC-bq        | my/close-all-buffers                 | Close all buffers                 |
+| CTRL-C c g    | org-mac-grab-link                    | Capture link from external source |
+| SHIFT-up      | org-move-subtree-up                  | Move current heading upwards      |
+| SHIFT-down    | org-move-subtree-down                | Move current heading down         |
+| SHIFT-left    | org-promote-subtree                  | Promote current heading           |
+| SHIFT-right   | org-demote-subtree                   | Demote current heading            |
+| CTRL-c .      | org-agenda-transient-state/body      | Agenda transient state            |
+| SPC-m i i     | my/org-screenshot                    | Take screenshot and insert        |
+| SPC-d d       | my/spacemacs-configuration-edit      | Edit my Spacemacs configuration   |
+| SPC-d b       | blogs                                | List my blogs                     |
+| SPC-d b [?] l | For [?] blog, org2blog/wp-login      | Start WordPress logged in session |
+| SPC-d b [?] w | org2blog/wp-mode                     | Start WordPress mode              |
+| SPC-d b [?] p | org2blog/wp-preview-subtree-post     | Preview (subtree) post            |
+| SPC-d b [?] P | org2blog/wp-post-subtree-and-publish | Post and publish (subtree)        |
+
 
 #+BEGIN_SRC emacs-lisp 
 
@@ -411,6 +424,12 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 
 (spacemacs/declare-prefix "d" "user")
 (evil-leader/set-key "dd" 'my/spacemacs-configuration-edit)
+(spacemacs/declare-prefix "db" "blogs")
+(spacemacs/declare-prefix "dbt" "t-m")
+(evil-leader/set-key "dbtl" 'org2blog/wp-login)
+(evil-leader/set-key "dbtw" 'org2blog/wp-mode)
+(evil-leader/set-key "dbtp" 'org2blog/wp-preview-subtree-post)
+(evil-leader/set-key "dbtP" 'org2blog/wp-post-subtree-and-publish)
 
 ;; Make movement keys work like they 'should' on long lines
 (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
