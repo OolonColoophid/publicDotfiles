@@ -39,6 +39,13 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 The files ~.spacemacs~, ~.spacemacsUserConfig~ and ~spacemacsUserConfig.org~ are publicly viewable. 
 
 Private files should be placed in ~/Dropbox/shellShared/publicDotfiles/private~.
+
+*** Load private configuration
+
+#+BEGIN_SRC elisp
+  (load "~/Dropbox/shellShared/publicDotfiles/private/privateConfig.el")
+#+END_SRC
+
 * Applications
 ** Deft
 *** Extension

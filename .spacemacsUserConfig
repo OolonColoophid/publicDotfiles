@@ -177,6 +177,8 @@ same directory as the org-buffer and insert a link to this file."
 
 (setq exec-path-from-shell-check-startup-files nil)
 
+(load "~/Dropbox/shellShared/publicDotfiles/private/privateConfig.el")
+
 (add-hook 'after-init-hook 'mu4e-alert-enable-mode-line-display)
 
 (setq org-mu4e-link-query-in-headers-mode nil)
