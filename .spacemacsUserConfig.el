@@ -2,7 +2,7 @@
 
 ;; It is called from ~/.spacemacs by:
 
-;; (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+;; (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el")
 
 (setq deft-extension "org")
 
@@ -277,7 +277,7 @@ user-full-name "Dr Ian Hocking"
     (split-window-right-and-focus)
     (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacs")
     (split-window-below-and-focus)
-    (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+    (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el")
     (evil-window-left 1))
     (when (get-buffer "spacemacsUserConfig.org")
       (switch-to-buffer "spacemacsUserConfig.org"))

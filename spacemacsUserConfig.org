@@ -3,11 +3,11 @@
 #+EMAIL:     ihocking@gmail.com
 #+LANGUAGE:  en
 
-#+PROPERTY: header-args :tangle ~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig
+#+PROPERTY: header-args :tangle ~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el
 
 * How this file relates to others
 
-This is a literate coding file in org format. When tangled with ~org-babel-tangle~, it will take the source blocks below and tangle them into a single elisp file called ~.spacemacsUserConfig~ (currently stored on Dropbox), which will then be loaded when Spacemacs starts as part of the function ~user-config~. 
+This is a literate coding file in org format. When tangled with ~org-babel-tangle~, it will take the source blocks below and tangle them into a single elisp file called ~.spacemacsUserConfig.el~ (currently stored on Dropbox), which will then be loaded when Spacemacs starts as part of the function ~user-config~. 
 
 
 #+BEGIN_SRC emacs-lisp
@@ -16,7 +16,7 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 ;; It is called from ~/.spacemacs by:
 
-;; (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+;; (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el")
 
 #+END_SRC
 
@@ -25,7 +25,7 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 - Org format with Elisp code blocks for user configuration options within the ~.spacemacs~ function ~dotspacemacs/userconfig~.
 - When tangled, this file produces:
 
-** ../Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig
+** ../Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el
 
 - Elisp file containing configuration options for ~dotspacemacs/userconfig~.
 - This file is loaded by:
@@ -36,7 +36,7 @@ This is a literate coding file in org format. When tangled with ~org-babel-tangl
 
 ** Privacy
 
-The files ~.spacemacs~, ~.spacemacsUserConfig~ and ~spacemacsUserConfig.org~ are publicly viewable. 
+The files ~.spacemacs~, ~.spacemacsUserConfig.el~ and ~spacemacsUserConfig.org~ are publicly viewable. 
 
 Private files should be placed in ~/Dropbox/shellShared/publicDotfiles/private~.
 
@@ -277,7 +277,7 @@ Close a message after it is sent; don't ask for context when opening mu4e; don't
 
 ** Edit my Spacemacs settings
 
-Provide me with three files. The ~org~ literate programming file ('~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org'), the tangled output of that ('~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig'), and the full ~.spacemacs~ configuration file ('~/Dropbox/shellShared/publicDotfiles/.spacemacs').
+Provide me with three files. The ~org~ literate programming file ('~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org'), the tangled output of that ('~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el'), and the full ~.spacemacs~ configuration file ('~/Dropbox/shellShared/publicDotfiles/.spacemacs').
 
 #+BEGIN_SRC elisp
   (defun my/spacemacs-configuration-edit ()
@@ -288,7 +288,7 @@ Provide me with three files. The ~org~ literate programming file ('~/Dropbox/she
       (split-window-right-and-focus)
       (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacs")
       (split-window-below-and-focus)
-      (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+      (find-file "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el")
       (evil-window-left 1))
       (when (get-buffer "spacemacsUserConfig.org")
         (switch-to-buffer "spacemacsUserConfig.org"))

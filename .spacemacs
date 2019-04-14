@@ -338,7 +338,7 @@ you should place your code here."
 
   ;; Source the tangled elisp file produced
   ;; from my org document .spacemacsUserConfig.org
-  (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig")
+  (load "~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el")
 )
 
 
