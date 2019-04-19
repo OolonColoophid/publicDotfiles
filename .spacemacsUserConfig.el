@@ -45,12 +45,12 @@
 (evil-leader/set-key "mii" 'my/org-screenshot)
 
 (spacemacs/declare-prefix "d" "user")
-(evil-leader/set-key "dd" 'my/spacemacs-configuration-edit)
 (spacemacs/declare-prefix "db" "blogs")
 (spacemacs/declare-prefix "dbt" "t-m")
 (evil-leader/set-key "dbtl" 'org2blog/wp-login)
 (evil-leader/set-key "dbtw" 'org2blog/wp-mode)
 (evil-leader/set-key "dbtp" 'org2blog/wp-preview-subtree-post)
+(evil-leader/set-key "dbto" 'my/t-m)
 (evil-leader/set-key "dbtP" 'org2blog/wp-post-subtree-and-publish)
 
 ;; Make movement keys work like they 'should' on long lines

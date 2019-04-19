@@ -277,7 +277,7 @@ Close a message after it is sent; don't ask for context when opening mu4e; don't
 
 ** Edit my Spacemacs settings
 
-Provide me with three files. The ~org~ literate programming file ('~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org'), the tangled output of that ('~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el'), and the full ~.spacemacs~ configuration file ('~/Dropbox/shellShared/publicDotfiles/.spacemacs').
+Provide me with three files. The ~org~ literate programming file ('~/Dropbox/shellShared/publicDotfiles/spacemacsUserConfig.org'), the tangled output of that ('~/Dropbox/shellShared/publicDotfiles/.spacemacsUserConfig.el'), and the full ~.spacemacs~ configuration file ('~/Dropbox/shellShared/publicDotfiles/.spacemacs'). 
 
 #+BEGIN_SRC elisp
   (defun my/spacemacs-configuration-edit ()
@@ -311,8 +311,6 @@ The following code creates a function to automatically tangle ~spacemacsUserConf
 
 (add-hook 'after-save-hook #'my/tangle-dotfiles)
 #+END_SRC
-
-
 
 
 * Behaviour
@@ -399,9 +397,9 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 | SHIFT-right   | org-demote-subtree                   | Demote current heading            |
 | CTRL-c .      | org-agenda-transient-state/body      | Agenda transient state            |
 | SPC-m i i     | my/org-screenshot                    | Take screenshot and insert        |
-| SPC-d d       | my/spacemacs-configuration-edit      | Edit my Spacemacs configuration   |
 | SPC-d b       | blogs                                | List my blogs                     |
 | SPC-d b [?] l | For [?] blog, org2blog/wp-login      | Start WordPress logged in session |
+| SPC-d b [?] o | my/t-m                               | Open blog org file with preview   |
 | SPC-d b [?] w | org2blog/wp-mode                     | Start WordPress mode              |
 | SPC-d b [?] p | org2blog/wp-preview-subtree-post     | Preview (subtree) post            |
 | SPC-d b [?] P | org2blog/wp-post-subtree-and-publish | Post and publish (subtree)        |
@@ -423,12 +421,12 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 (evil-leader/set-key "mii" 'my/org-screenshot)
 
 (spacemacs/declare-prefix "d" "user")
-(evil-leader/set-key "dd" 'my/spacemacs-configuration-edit)
 (spacemacs/declare-prefix "db" "blogs")
 (spacemacs/declare-prefix "dbt" "t-m")
 (evil-leader/set-key "dbtl" 'org2blog/wp-login)
 (evil-leader/set-key "dbtw" 'org2blog/wp-mode)
 (evil-leader/set-key "dbtp" 'org2blog/wp-preview-subtree-post)
+(evil-leader/set-key "dbto" 'my/t-m)
 (evil-leader/set-key "dbtP" 'org2blog/wp-post-subtree-and-publish)
 
 ;; Make movement keys work like they 'should' on long lines
@@ -737,6 +735,7 @@ For more on capture templates, see [[ https://orgmode.org/manual/Capture-templat
 | Research  | research.org   | Dated, appended - intended for notes during reading |
 | Emacs/CLI | emacs.org      | Appended                                            |
 
+
 #+BEGIN_SRC emacs-lisp
 
   (setq org-capture-templates
@@ -756,13 +755,16 @@ For more on capture templates, see [[ https://orgmode.org/manual/Capture-templat
                 ;; Emacs/Command Line
                 ("e" "Emacs/CLI" entry (file "~/Dropbox/org/emacs.org" )
                  "* %?\n\nCREATED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n" :empty-lines-before 1)
-
+                 
                 )
         )
   )
 
 
 #+END_SRC
+
+#+RESULTS:
+| m | Moleskine | entry | (file+datetree ~/Dropbox/org/moleskine.org) | * %? |
 
 *** Refiling
 
