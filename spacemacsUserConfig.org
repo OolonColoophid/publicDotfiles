@@ -387,19 +387,22 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 
 #+CAPTION: My keybindings
 #+NAME:    tab:keybindings
-| Key           | Fucntion                        | Description                        |
-|---------------+---------------------------------+------------------------------------|
-| SPC-bq        | my/close-all-buffers            | Close all buffers                  |
-| CTRL-C c g    | org-mac-grab-link               | Capture link from external source  |
-| SHIFT-up      | org-move-subtree-up             | Move current heading upwards       |
-| SHIFT-down    | org-move-subtree-down           | Move current heading down          |
-| SHIFT-left    | org-promote-subtree             | Promote current heading            |
-| SHIFT-right   | org-demote-subtree              | Demote current heading             |
-| CTRL-c .      | org-agenda-transient-state/body | Agenda transient state             |
-| SPC-m i i     | my/org-screenshot               | Take screenshot and insert         |
-| SPC-d b       | blogs                           | List my blogs                      |
-| SPC-d b [?] o | my/t-m                          | Open blog org file with preview    |
-| SPC-d b h     | org2blog/wp-hydra/body          | WordPress org2blog transient state |
+| Key           | Fucntion                             | Description                       |
+|---------------+--------------------------------------+-----------------------------------|
+| SPC-bq        | my/close-all-buffers                 | Close all buffers                 |
+| CTRL-C c g    | org-mac-grab-link                    | Capture link from external source |
+| SHIFT-up      | org-move-subtree-up                  | Move current heading upwards      |
+| SHIFT-down    | org-move-subtree-down                | Move current heading down         |
+| SHIFT-left    | org-promote-subtree                  | Promote current heading           |
+| SHIFT-right   | org-demote-subtree                   | Demote current heading            |
+| CTRL-c .      | org-agenda-transient-state/body      | Agenda transient state            |
+| SPC-m i i     | my/org-screenshot                    | Take screenshot and insert        |
+| SPC-d b       | blogs                                | List my blogs                     |
+| SPC-d b [?] l | For [?] blog, org2blog/wp-login      | Start WordPress logged in session |
+| SPC-d b [?] o | my/t-m                               | Open blog org file with preview   |
+| SPC-d b w     | org2blog/wp-mode                     | Start WordPress mode              |
+| SPC-d b p     | org2blog/wp-preview-subtree-post     | Preview (subtree) post            |
+| SPC-d b P     | org2blog/wp-post-subtree-and-publish | Post and publish (subtree)        |
 
 
 #+BEGIN_SRC emacs-lisp 
@@ -420,7 +423,11 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 (spacemacs/declare-prefix "d" "user")
 (spacemacs/declare-prefix "db" "blogs")
 (spacemacs/declare-prefix "dbt" "t-m")
-(spacemacs/declare-prefix "dbh" "org2-blog/wp-hydra/body")
+(evil-leader/set-key "dbtl" 'org2blog/wp-login)
+(evil-leader/set-key "dbw" 'org2blog/wp-mode)
+(evil-leader/set-key "dbp" 'org2blog/wp-preview-subtree-post)
+(evil-leader/set-key "dbto" 'my/t-m)
+(evil-leader/set-key "dbP" 'org2blog/wp-post-subtree-and-publish)
 
 ;; Make movement keys work like they 'should' on long lines
 (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)

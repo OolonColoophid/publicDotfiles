@@ -46,13 +46,12 @@ values."
      ranger
      mu4e
      git
-     ;; ess
+     ess
      ;;     markdown
      osx
      ;; bibtex
-     ;; deft
+     deft
      pandoc
-     pdf-tools
      python
      ; themes-megapack
      ;; yaml
