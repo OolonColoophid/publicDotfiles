@@ -87,7 +87,7 @@
 
 (setq org-todo-keywords
       '(
-        (sequence "IDEA(i)" "TODO(t)" "STARTED(s)" "NEXT(n)" "WAITING(w@/!)" "|" "DONE(d!)")
+        (sequence "TODO(t)" "IDEA(i)" "STARTED(s)" "NEXT(n)" "WAITING(w@/!)" "|" "DONE(d!)")
         (sequence "|" "CANCELED(c@)" "DELEGATED(g@/!)" "SOMEDAY(f)")
         ))
 

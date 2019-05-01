@@ -666,6 +666,12 @@ We'd use it like the following, from [[https://www.reddit.com/r/emacs/comments/2
 You basically use them like any other TODO entries. The key is a) To schedule them with some type of repeater like <2015-01-01 Thu .+7d> b) To give them the habit property
 #+END_QUOTE
 
+From [[https://orgmode.org/manual/Repeated-tasks.html][the Org manual on repeated tasks]]:
+
+#+BEGIN_QUOTE
+With the ‘+1m’ cookie, the date shift is always exactly one month. So if you have not paid the rent for three months, marking this entry DONE still keeps it as an overdue deadline. Depending on the task, this may not be the best way to handle it. For example, if you forgot to call your father for 3 weeks, it does not make sense to call him 3 times in a single day to make up for it. Finally, there are tasks like changing batteries which should always repeat a certain time after the last time you did it. For these tasks, Org mode has special repeaters ‘++’ and ‘.+’.
+#+END_QUOTE
+
 ** Appearance 
 
 *** Wrapping  
@@ -700,7 +706,7 @@ These should be logged.
 #+BEGIN_SRC emacs-lisp
 (setq org-todo-keywords
       '(
-        (sequence "IDEA(i)" "TODO(t)" "STARTED(s)" "NEXT(n)" "WAITING(w@/!)" "|" "DONE(d!)")
+        (sequence "TODO(t)" "IDEA(i)" "STARTED(s)" "NEXT(n)" "WAITING(w@/!)" "|" "DONE(d!)")
         (sequence "|" "CANCELED(c@)" "DELEGATED(g@/!)" "SOMEDAY(f)")
         ))
 #+END_SRC
