@@ -653,7 +653,7 @@ Let's use the module ~org-habit~.
 We'd use it like the following, from [[https://www.reddit.com/r/emacs/comments/2q1hi0/how_do_i_use_orghabit_anyway/][this Reddit comment]]:
 
 #+BEGIN_SRC
-** TODO [#C] Shave
+-** TODO [#C] Shave
    SCHEDULED: <2015-01-01 Thu .+7d>
    :LOGBOOK:  
    :END:      
