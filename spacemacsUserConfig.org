@@ -403,6 +403,7 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 | SPC-d b w     | org2blog/wp-mode                     | Start WordPress mode              |
 | SPC-d b p     | org2blog/wp-preview-subtree-post     | Preview (subtree) post            |
 | SPC-d b P     | org2blog/wp-post-subtree-and-publish | Post and publish (subtree)        |
+| SPC-d b h     | org2blog/wp-hydra/body               | org2blog transient state          |
 
 
 #+BEGIN_SRC emacs-lisp 
@@ -424,6 +425,7 @@ I'd prefer to use Ranger rather than the default dired. In Spacemacs, this is an
 (spacemacs/declare-prefix "db" "blogs")
 (spacemacs/declare-prefix "dbt" "t-m")
 (evil-leader/set-key "dbtl" 'org2blog/wp-login)
+(evil-leader/set-key "dbh" 'org2blog/wp-hydra/body)
 (evil-leader/set-key "dbw" 'org2blog/wp-mode)
 (evil-leader/set-key "dbp" 'org2blog/wp-preview-subtree-post)
 (evil-leader/set-key "dbto" 'my/t-m)
@@ -640,6 +642,30 @@ bibliographystyle:unsrt
 bibliography:~/Dropbox/CCCU/text/biblio/myLibrary.bib
 #+END_QUOTE
 
+** Habits
+
+Let's use the module ~org-habit~. 
+
+#+BEGIN_SRC elisp
+(require 'org-habit)
+#+END_SRC
+
+We'd use it like the following, from [[https://www.reddit.com/r/emacs/comments/2q1hi0/how_do_i_use_orghabit_anyway/][this Reddit comment]]:
+
+#+BEGIN_SRC
+** TODO [#C] Shave
+   SCHEDULED: <2015-01-01 Thu .+7d>
+   :LOGBOOK:  
+   :END:      
+   :PROPERTIES:
+   :STYLE:    habit
+   :END:
+#+END_SRC
+
+#+BEGIN_QUOTE
+You basically use them like any other TODO entries. The key is a) To schedule them with some type of repeater like <2015-01-01 Thu .+7d> b) To give them the habit property
+#+END_QUOTE
+
 ** Appearance 
 
 *** Wrapping  
@@ -696,7 +722,8 @@ First, let's make sure Python is loaded and we've loaded Babel languages:
     (require 'ob-python)
     (org-babel-do-load-languages
      'org-babel-load-languages
-     '((python . t)
+     '((sql . t)
+       (python . t)
        (shell . t)
        (lisp . t)
        (R .t)))

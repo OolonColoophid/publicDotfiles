@@ -48,6 +48,7 @@
 (spacemacs/declare-prefix "db" "blogs")
 (spacemacs/declare-prefix "dbt" "t-m")
 (evil-leader/set-key "dbtl" 'org2blog/wp-login)
+(evil-leader/set-key "dbh" 'org2blog/wp-hydra/body)
 (evil-leader/set-key "dbw" 'org2blog/wp-mode)
 (evil-leader/set-key "dbp" 'org2blog/wp-preview-subtree-post)
 (evil-leader/set-key "dbto" 'my/t-m)
@@ -93,7 +94,8 @@
 (require 'ob-python)
 (org-babel-do-load-languages
  'org-babel-load-languages
- '((python . t)
+ '((sql . t)
+   (python . t)
    (shell . t)
    (lisp . t)
    (R .t)))
@@ -406,5 +408,7 @@ user-full-name "Dr Ian Hocking"
 (setq bibtex-completion-bibliography "~/Dropbox/CCCU/text/biblio/myLibrary.bib")
 
 (setq org-latex-pdf-process (list "latexmk -shell-escape -bibtex -f -pdf %f"))
+
+(require 'org-habit)
 
 (setq ns-right-option-modifier 'meta)
